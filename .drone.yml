@@ -1,0 +1,8 @@
+pipeline:
+  publish:
+    image: plugins/docker
+    registry: registry:5000
+    insecure: true
+    repo: registry:5000/bustimings
+    tags:
+      - latest
