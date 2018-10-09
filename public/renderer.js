@@ -6,7 +6,33 @@ const renderer = data =>{
   html += "</table>"
   return html
 }
-
+const getMins = time=> {
+  const currTime = new Date()
+  if (!time instanceof Date) {
+    return "--";
+  }
+  if (time-currTime > 60000) {
+    return Math.floor((time - currTime) / 60000);
+  }else if (time-currTime < 60000) {
+    return "Arr";
+  } else {
+    return "--";
+  }
+}
+const getColor = load =>{
+  if (!load) {
+    return "LightCyan";
+  }
+  if (load == "SEA") {
+    return "#99ff99";
+  }
+  if (load == "SDA") {
+    return "#ffff99";
+  }
+  if (load == "LSD") {
+    return "#ff9999";
+  }
+}
 const renderBusStop = ({services},stopName,showAll=false)=>{
   let html = `<tr><td rowspan='4' style='width:21%;padding:2%'>${stopName}</td></tr>`
   const currTime = new Date()
