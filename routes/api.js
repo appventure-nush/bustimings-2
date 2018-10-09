@@ -18,8 +18,11 @@ router.post("/api/getData",(req,res)=>{
       }
     }
     const busStops = ["16991", "17191", "17129", "17121"]
-    const results = await Promise.all(busStops.map(id=>request(`${endpoint}${id}`,options)))
-    return res.json(results.map(JSON.parse))
+    const results = (await Promise.all(busStops.map(id=>request(`${endpoint}${id}`,options)))).map(JSON.parse)
+    for(let i=0;i<busStops.length;i++){
+      results[i].stopId = busStops[i]
+    }
+    return res.json(results)
   })()
   .catch(err=>{
     let code = err.code || 500

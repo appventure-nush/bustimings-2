@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html style='height:100%;'>
   <head>
+    <script src="./renderer.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
       td{
@@ -31,6 +32,16 @@
       <h1 id="date-time" style="font-size:5vmin">
       </h1>
     </div>
+    <div id="output">
+
+    </div>
+    <script>
+      fetch("/api/getData",{method:"POST"})
+      .then(res=>res.json())
+      .then(json=>{
+        document.getElementById("output").innerHTML = renderer(json)
+      })
+    </script>
   </body>
 </html>
 <!--Wayne Tee-->

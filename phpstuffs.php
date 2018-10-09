@@ -1,3 +1,4 @@
+<?
 require 'config.php';
 
 $busstops = array("16991", "17191", "17129", "17121");
@@ -69,7 +70,7 @@ for ($i = 0; $i < count($busstops); $i++) {
         $out['Services'][$ii]["NextBus3"]["Load"] = "";
         $diff = $now->diff(new DateTime($out['Services'][$ii]["NextBus"]["EstimatedArrival"]));
       }
-      echo "<td style='border-width: 1px 1px 0px 1px;text-align:right;padding-right: 1%;'>" . $out['Services'][$ii]["ServiceNo"] . "</td>";
+      echo "<tr><td rowspan='4' style='width:21%;padding:2%'>" . $busstopsname[$i] . "</td>"
     }
   }
   echo "</tr><tr>";
