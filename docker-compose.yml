@@ -1,0 +1,9 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "${BUSTIMINGS_PORT}:${BUSTIMINGS_PORT}"
+    command: "npm start"
+    volumes:
+      - ./:/bustimings
