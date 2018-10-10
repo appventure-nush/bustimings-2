@@ -17,7 +17,6 @@ router.post("/api/getData",(req,res)=>{
     for(let i=0;i<busStops.length;i++){
       for(const service of results[i]){
         service.stopId = busStops[i]
-        console.log(Object.keys(results[i]))
       }
     }
     return res.json(results)

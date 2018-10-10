@@ -1,10 +1,15 @@
 const renderer = data =>{
   let html = ""
-  for(const stop of data){
-    console.log(stop[0])
-    html+= renderBusStop(stop,stop[0].stopId)
+  const busStops = {
+    "16991":"Front Gate", 
+    "17191":"Back Gate", 
+    "17129":"Back Gate Middle", 
+    "17121":"Back Gate Far"
   }
-  return html
+  for(const stop of data){
+    html+= renderBusStop(stop,busStops[stop[0].stopId])
+  }
+  return html + "<br><br>"
 }
 const getMins = time=> {
   const currTime = new Date()
@@ -36,9 +41,11 @@ const getColor = load =>{
 
 const displayTiming = (busNo,{Load:load,EstimatedArrival:arrival}) =>{
   let html =
-   `<td class='busNo'>${busNo}</td>
-      <td class='t1' style=' background-color:${getColor(load)}'>
+   `<td class='t1' style=' background-color:${getColor(load)}'>
       ${getMins(new Date(arrival))}`
+  if(busNo){
+    html = `<td class='busNo'>${busNo}</td>` + html
+  }
   if (getMins(new Date(arrival)) != 'Arr') {
     html += "<span class='m'>m</span>";
   } 
@@ -56,8 +63,7 @@ const renderBusStop = (services,stopName,showAll=false)=>{
     console.log(service)
     html+=`<tr>
       ${displayTiming(service.ServiceNo,service.NextBus)}
-      <td style='width: 5%;'></td>
-      ${displayTiming(service.ServiceNo,service.NextBus2)}
+      ${displayTiming(null,service.NextBus2)}
       </tr>
       `
   }

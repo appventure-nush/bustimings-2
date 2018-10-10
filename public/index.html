@@ -3,6 +3,7 @@
   <head>
     <script src="./renderer.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,500" rel="stylesheet">
     <style>
        * {
         box-sizing: border-box;
@@ -14,30 +15,29 @@
         font-size: 100%;
       }
       body{
-      overflow:hidden;
+        background-color: #dfdfdf;
+      }
+      @media only screen and (max-device-width: 480px) {
+        body{
+          font-size: 50%;
+        }
       }
       #top{
         width:100%;
-        position: absolute;
-        top:0px;
         border-bottom-style: solid;
-        height:8%;
       }
       .title{
-        font-size: 270%;
+        font-size: 2.7em;
         background-color:transparent;
-        margin-top:25px !important;
-        padding-left:10px;
-        font-family: Helvetica;
+        font-family: Montserrat;
+        font-weight: 700;
       }
       #time{
-        position: absolute;
         left:60%;
         width: 50%;
         text-align:center;
       }
       #mid{
-        position: absolute;
         top:10%;
         width:100%;
         height:90%;
@@ -49,26 +49,28 @@
         height: 6%;
         margin: 0;
         padding-bottom: 5px;
-        font-family: Helvetica;
+        font-family: Montserrat;
+        font-weight: 500;
       }
       .stop{
-        position:absolute;
         border-collapse: collapse;
       }
       .busNo{
         font-size: 400%;
         color: white;
         border-bottom-style: solid;
-        font-family: Helvetica;
+        /* Venu suggestion */
+        font-family: Montserrat;
         text-align: center;
-        background-color: #b30000;
+        /* Venu suggestion */
+        background-color: #e21111;
         width: 20%;
       }
       .t1{
         font-size: 400%;
         border-right-style: solid;
         border-left-style: solid;
-        font-family: Helvetica;
+        font-family: Montserrat;
         text-align: center;
         border-bottom-style: solid;
         border-color: white;
@@ -76,42 +78,35 @@
       }
       .t2{
         font-size: 350%;
-        font-family: Helvetica;
+        font-family: Montserrat;
         text-align: center;
         border-bottom-style: solid;
         border-color: white;
         width: 12.5%;
-      }
-      td{
-        overflow: hidden;
       }
       .m{
         font-size:70%;
       }
     </style>
   </head>
-  <body style='height:97%;'>
+  <body>
   <div id="top">
+      <table style="float:right;border-style: solid; border-color: black;margin-right: 5%">
+        <tr>
+          <td style="text-align: left;padding:5px;border-width: 0px;background-color: #99ff99;font-size: 200%; font-family: Montserrat;"> Seats Available</td>
+        </tr>
+        <tr>
+          <td style="text-align: left;padding:5px;border-width: 0px;background-color: #ffff99; font-size: 200%; font-family: Montserrat;"> Standing Available</td>
+        </tr>
+        <tr>
+          <td style="text-align: left;padding:5px;border-width: 0px;background-color: #ff9999; font-size: 200%; font-family: Montserrat;"> Standing Limited</td>
+        </tr>
+      </table>
       <p class="title"> NUSH Bus Timings
         <span id="time">
-          <!-- <?php
-          date_default_timezone_set("Asia/Singapore");
-          echo date("h:ia");
-          ?> -->
         </span>
       </p>
     </div>
-    <table style="position: absolute; top: 19%; right: 3%; border-style: solid; border-color: black;">
-      <tr>
-        <td style="text-align: left;padding:5px;border-width: 0px;background-color: #99ff99;font-size: 200%; font-family: Helvetica;"> Seats Available</td>
-      </tr>
-      <tr>
-        <td style="text-align: left;padding:5px;border-width: 0px;background-color: #ffff99; font-size: 200%; font-family: Helvetica;"> Standing Available</td>
-      </tr>
-      <tr>
-        <td style="text-align: left;padding:5px;border-width: 0px;background-color: #ff9999; font-size: 200%; font-family: Helvetica;"> Standing Limited</td>
-      </tr>
-    </table>
     <div id="output">
 
     </div>
