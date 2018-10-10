@@ -1,9 +1,9 @@
 const renderer = data =>{
-  let html = "<table border='1'; style='table-layout:fixed;width:100%;height:100%;border-collapse:collapse;'>"
+  let html = ""
   for(const stop of data){
-    html+= renderBusStop(stop,stop.stopId)
+    console.log(stop[0])
+    html+= renderBusStop(stop,stop[0].stopId)
   }
-  html += "</table>"
   return html
 }
 const getMins = time=> {
@@ -33,21 +33,35 @@ const getColor = load =>{
     return "#ff9999";
   }
 }
-const renderBusStop = ({services},stopName,showAll=false)=>{
-  let html = `<tr><td rowspan='4' style='width:21%;padding:2%'>${stopName}</td></tr>`
-  const currTime = new Date()
-  const doNotShow = ['97e','963R']
-  const timingsName = ["next","subsequent","next2"]
-  for (const service of services){
-    if(showAll || !doNotShow.includes(service.no)){
-      //Not hidden
-      for(const timingName of timingsName){
-        const diff = new Date(new Date(service[timingName].time) - currTime).getMinutes()
-        html += `<tr><td class='time' style='border-width: 0px 1px 0px 0px;background-color:"white" '>${diff}</td></tr>`
-      }
-    }
+
+const displayTiming = (busNo,{Load:load,EstimatedArrival:arrival}) =>{
+  let html =
+   `<td class='busNo'>${busNo}</td>
+      <td class='t1' style=' background-color:${getColor(load)}'>
+      ${getMins(new Date(arrival))}`
+  if (getMins(new Date(arrival)) != 'Arr') {
+    html += "<span class='m'>m</span>";
+  } 
+  return html + "</td>"
+}
+
+const renderBusStop = (services,stopName,showAll=false)=>{
+  let html = `
+    <p class='stopName' style='width:100%'>
+      ${stopName}
+    </p>
+    <table class='stop' style='width:100%;'>`
+  services = services.filter(({ServiceNo})=>ServiceNo!=="963R" && ServiceNo!=="97e")
+  for(const service of services){
+    console.log(service)
+    html+=`<tr>
+      ${displayTiming(service.ServiceNo,service.NextBus)}
+      <td style='width: 5%;'></td>
+      ${displayTiming(service.ServiceNo,service.NextBus2)}
+      </tr>
+      `
   }
-  return html
+  return html + "</table>"
 }
 if(typeof navigator==="undefined"){
   module.exports =  renderer

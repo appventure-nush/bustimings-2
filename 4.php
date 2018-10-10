@@ -90,7 +90,7 @@
     </style>
   </head>
   <body>
-    <?php
+    <!-- <?php
 
     require 'config.php';
 
@@ -186,48 +186,30 @@
       $busstopsname = array("Front Gate", "Back Gate", "Back Gate Middle", "Back Gate Far");
       $stopnameheight = array("9%", "21.5%", "50.5%", "71.5%");
       $tableheight = array("14.5%", "27%", "56.5%", "77.5%");
-      if ($n <= 1) {
-        echo"
-            <p class='stopName' style='width:50%; position: absolute; top:" . $stopnameheight[$n] . ";'>
-            " . $busstopsname[$n] . "</p>
-            <table class='stop' style='width: 49%; top: " . $tableheight[$n] . "';'>
-            ";
-        for ($i = 0; $i < count($data); $i++) {
-          echo"<tr>
-                "
-          . disRow($data, $i, $n) .
-          "
-                </tr>";
-        }
-        echo"
+      echo"
+          <p class='stopName' style='width:100%; position: absolute; top:" . $stopnameheight[$n] . "'>
+          " . $busstopsname[$n] . "</p>
+          <table class='stop' style='width:100%; position: absolute; top:" . $tableheight[$n] . "'>
+          ";
+      for ($i = 0; $i < (count($data) / 2); $i++) {
+        echo "<tr>";
+        disRow($data, 2 * $i, $n);
+        echo "<td style='width: 5%;'></td>";
+        disRow($data, (2 * $i) + 1, $n);
+        echo"</tr>";
+      }
+      echo"
           </table>
           ";
-      } else {
-        echo"
-            <p class='stopName' style='width:100%; position: absolute; top:" . $stopnameheight[$n] . "'>
-            " . $busstopsname[$n] . "</p>
-            <table class='stop' style='width:100%; position: absolute; top:" . $tableheight[$n] . "'>
-            ";
-        for ($i = 0; $i < (count($data) / 2); $i++) {
-          echo "<tr>";
-          disRow($data, 2 * $i, $n);
-          echo "<td style='width: 5%;'></td>";
-          disRow($data, (2 * $i) + 1, $n);
-          echo"</tr>";
-        }
-        echo"
-            </table>
-            ";
-      }
     }
-    ?>
+    ?> -->
     <div id="top">
       <p class="title"> NUSH Bus Timings
         <span id="time">
-          <?php
+          <!-- <?php
           date_default_timezone_set("Asia/Singapore");
           echo date("h:ia");
-          ?>
+          ?> -->
         </span>
       </p>
     </div>
@@ -242,10 +224,10 @@
         <td style="text-align: left;padding:5px;border-width: 0px;background-color: #ff9999; font-size: 200%; font-family: Helvetica;"> Standing Limited</td>
       </tr>
     </table>
-    <?php
+    <!-- <?php
     for ($i = 0; $i < count($busstops); $i++) {
       display(cleanUp($out[$i]['Services']), $i);
     }
-    ?>
+    ?> -->
   </body>
 </html>
