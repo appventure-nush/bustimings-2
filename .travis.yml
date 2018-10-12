@@ -3,8 +3,16 @@ node_js:
 - '10'
 env:
   secure: BuXsEuO6Zs4R1VS7qr2/REssU859TraDnPGgO4W1GHXgetXlYvxC1ZMgb9gCzdBXJGeTfNkx/v5j6eIKj4yI7KM+C++FnIpBYEqZB737SpXhVXGtq5XaWglpBuK9l8TX7aZ0DOOvTjGRkeZ/IhVtCRoqM4ziNLmOeZl+8bwK5WsDpjxVWAew9GUSo2vHB7CmK3+JMv8ApZgzHCESbOUxSKkv+apkTxrMPeqNHZPPMPiwF96UqHJu8brjzlKZMpuyidI5rDNy0tCBc4Jw72R68cGraPGuHkcCbrH1ikPrHItRT8QsFcqDMJQOVdsI3uQAaFeFM1xEOKvI9VRoP4XG0lHt5xqxAuSdHIgUSdF2gFYV1qQErWrLJyWxCOCY+M81wTyeLVY1Ds7uw/Njzy3V9UP0yrKNm4CCNsRZeX4E3zjpa3fA7sc60l5WT0SpXjq1/OliuovBmqGtLxVuDnUF9gVaXYqnLVqnFODpsStU/HFp3MAFleEdE4UTdeAWITUANMP8FoPgpBue3DGYeMbfMZckWRCtZKMI0OINgxxPR3bhNma/oWcKk69ChyQVye7eglKDugNsJYjPs/ux4pL5YamPzABKffT3ydh22xTXXf/YiZ9OWA8+ZOuV2MCOjqsGCTRJWXsi2V7cJ3+M0iF5theZfQfuqVQGArzrplar6HA=
-
 script:
-  - npm ci
-  - mkdir artifacts
-  - npm test
+- mkdir artifacts
+- npm test
+deploy:
+  provider: releases
+  api_key:
+    secure: NbJqdon6AobB8bXEp8Ay4bp5SI4wL5lsGIY/UVLOCl37hRdqIVW2ryvJxnQewlgAHlivQwNbn53bwweiKVGAkpgpNw24YRz6MKaH6vx+4OOlR51sVpt1EWixP9IneiKge62Ar3hMenG9kxAu1YpPzNLasJX69LU0hcwptQhFwzR1zAMR13x8sRqtAW4n8tIn/sBSlvk536RpSZdws5fD1kIMvMp7CH3ZnyjXA+0/xAy+Yng2b+hEH3ggk+ASAOOueeaZr60rZC8twTLxvolqdQgp9u+RumEQ/PoNWWk6TMluOnmw01lTIcV51ByrY4fCCcvxx23h85ONaiLhiKSpaGMEPi3/glJ7rEB3J/QlirksRj09QPQW152/wqKQNW7qHrAgj1HF0xIC+AWJ4aWw5OA3IC81EAfNHQXIpJsysNQvIN+88GvYUFp1j/WJ69GvFbIVz/8QZvVSu/tdxdIerTgxsg8FL6Nbo0o3x51GDY5w3siuGiTByAgobu7JWslj6GjdpSpsQG7BvGZiYvA6STAXdqCM8TK975bkzTztn0aaTBGoeDpvN4WD5yolY+nfT3jmCo1MUclynkGXazwMcd9aYcwhboR9G9/7YDmq1QuCddfdW2Vb2WE+jfZQDvFQUkF9Ug+meupHSu4q/Ew4n28CltWxt1T79kgO9g4pToo=
+  file: artifacts/*
+  file_glob: true
+  skip_cleanup: true
+  on:
+    repo: junron/bustimings
+  tag: next
