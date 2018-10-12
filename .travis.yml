@@ -1,3 +1,10 @@
 language: node_js
 node_js:
-  - "10"
+- '10'
+env:
+  secure: BuXsEuO6Zs4R1VS7qr2/REssU859TraDnPGgO4W1GHXgetXlYvxC1ZMgb9gCzdBXJGeTfNkx/v5j6eIKj4yI7KM+C++FnIpBYEqZB737SpXhVXGtq5XaWglpBuK9l8TX7aZ0DOOvTjGRkeZ/IhVtCRoqM4ziNLmOeZl+8bwK5WsDpjxVWAew9GUSo2vHB7CmK3+JMv8ApZgzHCESbOUxSKkv+apkTxrMPeqNHZPPMPiwF96UqHJu8brjzlKZMpuyidI5rDNy0tCBc4Jw72R68cGraPGuHkcCbrH1ikPrHItRT8QsFcqDMJQOVdsI3uQAaFeFM1xEOKvI9VRoP4XG0lHt5xqxAuSdHIgUSdF2gFYV1qQErWrLJyWxCOCY+M81wTyeLVY1Ds7uw/Njzy3V9UP0yrKNm4CCNsRZeX4E3zjpa3fA7sc60l5WT0SpXjq1/OliuovBmqGtLxVuDnUF9gVaXYqnLVqnFODpsStU/HFp3MAFleEdE4UTdeAWITUANMP8FoPgpBue3DGYeMbfMZckWRCtZKMI0OINgxxPR3bhNma/oWcKk69ChyQVye7eglKDugNsJYjPs/ux4pL5YamPzABKffT3ydh22xTXXf/YiZ9OWA8+ZOuV2MCOjqsGCTRJWXsi2V7cJ3+M0iF5theZfQfuqVQGArzrplar6HA=
+
+script:
+  - npm ci
+  - mkdir artifacts
+  - npm test
