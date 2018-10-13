@@ -37,8 +37,7 @@ describe("Bus timings web UI",async function(){
     console.log("pageloaad")
     await page._client.send('Emulation.clearDeviceMetricsOverride')
     await page.waitFor(1000)
-    const data = (await page.screenshot({path: './artifacts/initial.png',fullPage:true})).toString("base64")
-    console.log("Image base64: data:image/png;base64,"+data)
+    await page.screenshot({path: './artifacts/initial.png',fullPage:true})
     console.log("Browser + page ready")
   })
   after(async function(){
