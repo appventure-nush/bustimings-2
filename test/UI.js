@@ -24,7 +24,7 @@ async function init(){
   console.log("pageopen")
 }
 
-describe("Hwboard",async function(){
+describe("Bus timings web UI",async function(){
   this.timeout(15000);
   before(async function (){
     this.timeout(40000)
