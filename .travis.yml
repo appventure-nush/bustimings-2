@@ -3,11 +3,12 @@ node_js:
 - '10'
 cache:
   directories:
-  - node_modules
+  - "$HOME/.npm"
 script:
 - mkdir artifacts
 - npm test
-- wget https://doc-08-48-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/br4s3b0jv9q6hct0fm8grrmn55s622i4/1539432000000/15876260727594163214/\*/0B3X9GlR6EmbnamliN0Rld01oRVk\?e\=download -O gdrive
+- wget https://doc-08-48-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/br4s3b0jv9q6hct0fm8grrmn55s622i4/1539432000000/15876260727594163214/\*/0B3X9GlR6EmbnamliN0Rld01oRVk\?e\=download --quiet -O gdrive
+- chmod +x ./gdrive
 - openssl aes-256-cbc -K $encrypted_77fae477b7c9_key -iv $encrypted_77fae477b7c9_iv
   -in .gdrive/token_v2.json.enc -out .gdrive/token_v2.json -d
 - ./gdrive -c ./.gdrive upload artifacts --recursive
