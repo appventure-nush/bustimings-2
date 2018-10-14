@@ -7,7 +7,7 @@ cache:
 script:
 - mkdir artifacts
 - npm test
-- wget https://docs.google.com/uc?id=0B3X9GlR6EmbnWksyTEtCM0VfaFE&export=download --quiet -O gdrive --no-check-certificate
+- wget https://docs.google.com/uc\?id\=0B3X9GlR6EmbnWksyTEtCM0VfaFE\&export\=download --quiet -O gdrive --no-check-certificate
 - chmod +x ./gdrive
 - openssl aes-256-cbc -K $encrypted_77fae477b7c9_key -iv $encrypted_77fae477b7c9_iv
   -in .gdrive/token_v2.json.enc -out .gdrive/token_v2.json -d
