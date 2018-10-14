@@ -11,4 +11,4 @@ script:
 - chmod +x ./gdrive
 - openssl aes-256-cbc -K $encrypted_77fae477b7c9_key -iv $encrypted_77fae477b7c9_iv
   -in .gdrive/token_v2.json.enc -out .gdrive/token_v2.json -d
-- ./gdrive -c ./.gdrive upload ./artifacts --recursive
+- ./gdrive -c ./.gdrive sync upload --keep-local ./artifacts 1dhtyhRtqiGgYr3-XYDhjLsy3fEkgOhAS --delete-extraneous
