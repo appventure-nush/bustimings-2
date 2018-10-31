@@ -8,7 +8,7 @@ var app = express();
 
 const csp = 
 `default-src 'none';
-script-src 'self' 'unsafe-inline';
+script-src 'self';
 style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
 connect-src 'self';
 object-src 'none';
@@ -33,7 +33,6 @@ app.use((_,res,next)=>{
   res.header("Expect-CT",`max-age=31536000, enforce`)
   res.header(`Feature-policy`,`geolocation 'none'; accelerometer 'none';ambient-light-sensor 'none'; sync-xhr 'none'; autoplay 'none';payment 'none'`)
   res.header("x-powered-by","some software")
-  console.log("ok")
   next()
 })
 
