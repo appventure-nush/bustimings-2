@@ -24,24 +24,16 @@ const getMins = time=> {
     return "--";
   }
 }
-const getColor = load =>{
+const getLoadClass = load =>{
   if (!load) {
-    return "LightCyan";
+    return "load-unknown";
   }
-  if (load == "SEA") {
-    return "#99ff99";
-  }
-  if (load == "SDA") {
-    return "#ffff99";
-  }
-  if (load == "LSD") {
-    return "#ff9999";
-  }
+  return "load-"+load
 }
 
 const displayTiming = (busNo,{Load:load,EstimatedArrival:arrival}) =>{
   let html =
-   `<td class='t1' style=' background-color:${getColor(load)}'>
+   `<td class='t1 ${getLoadClass(load)}'>
       ${getMins(new Date(arrival))}`
   if(busNo){
     html = `<td class='busNo'>${busNo}</td>` + html
@@ -54,10 +46,10 @@ const displayTiming = (busNo,{Load:load,EstimatedArrival:arrival}) =>{
 
 const renderBusStop = (services,stopName,showAll=false)=>{
   let html = `
-    <p class='stopName' style='width:100%'>
+    <p class='stopName'>
       ${stopName}
     </p>
-    <table class='stop' style='width:100%;'>`
+    <table class='stop'>`
   services = services.filter(({ServiceNo})=>ServiceNo!=="963R" && ServiceNo!=="97e")
   for(const service of services){
     console.log(service)
