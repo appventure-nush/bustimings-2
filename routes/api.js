@@ -1,10 +1,19 @@
 const express = require('express')
 const request = require("request-promise-native")
 const router = express.Router()
+const cache = new (require("node-cache"))({
+  stdTTL:60,
+  checkperiod:50
+})
 
 
 router.post("/api/getData",(req,res)=>{
   ;(async ()=>{
+    const cachedValue = cache.get("bus-data")
+    if(cachedValue!==undefined){
+      console.log("Cache hit!")
+      return res.json(cachedValue)
+    }
     const {ACCOUNT_KEY:accountKey} = process.env
     let endpoint = 'http://datamall2.mytransport.sg/ltaodataservice/BusArrivalv2?BusStopCode='
     const options = {
@@ -19,6 +28,9 @@ router.post("/api/getData",(req,res)=>{
         service.stopId = busStops[i]
       }
     }
+    //Add data to cache
+    //ttl of 60 seconds, cos thats when LTA pushes new data
+    cache.set("bus-data",results,60)
     return res.json(results)
   })()
   .catch(err=>{
