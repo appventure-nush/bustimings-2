@@ -6,6 +6,10 @@ const cache = new (require("node-cache"))({
   checkperiod:50
 })
 
+const {ACCOUNT_KEY:accountKey} = process.env
+if(!accountKey){
+  throw new Error("Account key is not defined.")
+}
 
 router.post("/api/getData",(req,res)=>{
   ;(async ()=>{
@@ -14,15 +18,20 @@ router.post("/api/getData",(req,res)=>{
       console.log("Cache hit!")
       return res.json(cachedValue)
     }
-    const {ACCOUNT_KEY:accountKey} = process.env
-    let endpoint = 'http://datamall2.mytransport.sg/ltaodataservice/BusArrivalv2?BusStopCode='
+    let endpoint = 'https://api.mytransport.sg/ltaodataservice/BusArrivalv2?BusStopCode='
     const options = {
       headers:{
         AccountKey: accountKey
       }
     }
     const busStops = ["16991", "17191", "17129", "17121"]
-    const results = (await Promise.all(busStops.map(id=>request(`${endpoint}${id}`,options)))).map(JSON.parse).map(a=>a.Services)
+    const results = (
+      await Promise.all(busStops.map(id=>
+        request(`${endpoint}${id}`,options)
+      )
+    ))
+    .map(JSON.parse)
+    .map(a=>a.Services)
     for(let i=0;i<busStops.length;i++){
       for(const service of results[i]){
         service.stopId = busStops[i]
@@ -35,7 +44,11 @@ router.post("/api/getData",(req,res)=>{
   })()
   .catch(err=>{
     let code = err.code || 500
-    res.status(code).end(err.toString().replace("Error: ",""))
+    console.log("An error occurred:",err.toString())
+    res.status(code).json({
+      error:true,
+      message:err.toString()
+    })
   })
 })
 
