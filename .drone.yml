@@ -6,3 +6,5 @@ pipeline:
     repo: registry:5000/bustimings
     tags:
       - latest
+    when:
+      branch: master
