@@ -1,7 +1,9 @@
 FROM node:alpine
 
-RUN mkdir bustimings
-WORKDIR bustimings
-COPY . .
+RUN adduser -S bustimings
+USER bustimings
+RUN mkdir /home/bustimings/bustimings
+WORKDIR /home/bustimings/bustimings
+COPY --chown=bustimings:root . .
 
-RUN apk add bash --no-cache && npm install
+RUN npm ci --production
