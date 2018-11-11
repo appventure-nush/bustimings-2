@@ -14,4 +14,5 @@ script:
   -in .gdrive/token_v2.json.enc -out .gdrive/token_v2.json -d
 - npm install deviceframe
 - ./node_modules/deviceframe/cli.js "./artifacts/Nexus 5.png" --frame "Nexus 5x" -o artifacts
+- ./node_modules/deviceframe/cli.js "./artifacts/offline.png" --frame "offline" -o artifacts
 - ./gdrive -c ./.gdrive sync upload --keep-local ./artifacts 1dhtyhRtqiGgYr3-XYDhjLsy3fEkgOhAS --delete-extraneous
