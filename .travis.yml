@@ -8,7 +8,7 @@ cache:
 script:
 - mkdir artifacts
 - npm test
-- curl https://doc-0c-48-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/g9cln8cmu3sti77j5f13619mpkq0e28n/1541836800000/15876260727594163214/*/0B3X9GlR6EmbnWksyTEtCM0VfaFE?e=download -o gdrive
+- curl https://docs.google.com/uc\?id\=0B3X9GlR6EmbnQ0FtZmJJUXEyRTA\&export\=download -L -o gdrive
 - chmod +x ./gdrive
 - openssl aes-256-cbc -K $encrypted_77fae477b7c9_key -iv $encrypted_77fae477b7c9_iv
   -in .gdrive/token_v2.json.enc -out .gdrive/token_v2.json -d
