@@ -7,7 +7,7 @@ fetch("/api/getData",{method:"POST"})
   })
   document.getElementById("output").innerHTML = `
   <p class="error">
-    Error loading data from server. Data may be outdated.<br>
+    Error loading data from server. Arrival times are estimated.<br>
     Last fetched: ${new Date().toLocaleTimeString()}
   </p>
   `

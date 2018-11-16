@@ -41,7 +41,9 @@ const getMins = time=> {
   if (!time instanceof Date) {
     return "--";
   }
-  if (time-currTime > 60000) {
+  if(time-currTime<0){
+    return "No data"
+  }else if (time-currTime > 60000) {
     return Math.floor((time - currTime) / 60000);
   }else if (time-currTime < 60000) {
     return "Arr";
@@ -57,13 +59,14 @@ const getLoadClass = load =>{
 }
 
 const displayTiming = (busNo,{Load:load,EstimatedArrival:arrival}) =>{
+  const arrivalMins = getMins(new Date(arrival))
   let html =
-   `<td class='t1 ${getLoadClass(load)}'>
-      ${getMins(new Date(arrival))}`
+   `<td class='t1 ${arrivalMins==="No data" ? "no-data" : getLoadClass(load)}'>
+      ${arrivalMins}`
   if(busNo){
     html = `<td class='busNo'>${busNo}</td>` + html
   }
-  if (getMins(new Date(arrival)) != 'Arr') {
+  if (arrivalMins != 'Arr' && arrivalMins !== 'No data' && arrivalMins !== '--') {
     html += "<span class='m'>m</span>";
   } 
   return html + "</td>"
