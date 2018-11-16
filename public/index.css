@@ -40,6 +40,20 @@ body {
   margin-top: 17%;
 }
 
+.error {
+  color: red;
+  width: 100vw;
+  font-size: 150%;
+  padding-bottom: 0px;
+  padding-top: 10px;
+  height: 6%;
+  margin: 0;
+  padding-bottom: 5px;
+  font-family: Montserrat, Helvetica, sans-serif;
+  font-weight: 500;
+  padding-left: 10px;
+}
+
 .float-left {
   float: left;
 }
