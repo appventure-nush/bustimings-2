@@ -17,6 +17,12 @@ body {
   body {
     font-size: 50%;
   }
+  #output .stop {
+    width: 100vw;
+  }
+  body #top table {
+    margin-top: initial;
+  }
 }
 
 #top {
@@ -24,12 +30,25 @@ body {
   border-bottom-style: solid;
 }
 
+#top table {
+  margin-top: 200px;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
 .title {
   font-size: 2.7em;
   background-color: transparent;
   font-family: Montserrat, Helvetica, sans-serif;
   font-weight: 700;
-  padding-left: 10px;
+  padding: 1em 10px 1em 10px;
+  margin: 0px;
 }
 
 #time {
@@ -46,7 +65,7 @@ body {
 }
 
 .stopName {
-  width: 100%;
+  width: 100vw;
   font-size: 350%;
   padding-bottom: 0px;
   padding-top: 10px;
@@ -60,7 +79,7 @@ body {
 
 .stop {
   border-collapse: collapse;
-  width: 100%;
+  width: 49vw;
 }
 
 .busNo {

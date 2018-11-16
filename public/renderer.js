@@ -7,7 +7,31 @@ const renderer = data =>{
     "17121":"Back Gate Far"
   }
   for(const stop of data){
-    html+= renderBusStop(stop,busStops[stop[0].stopId])
+    if(stop.length>3){
+      const stopA = stop.slice(0,Math.ceil(stop.length/2))
+      const stopB = stop.slice(Math.ceil(stop.length/2),stop.length)
+      html+=`
+      <p class='stopName'>
+        ${busStops[stop[0].stopId]}
+      </p>`
+      html+=`
+      <div class="float-left">
+      <table class='stop'>`
+      html+= renderBusStop(stopA,busStops[stop[0].stopId])
+      html+=`</div>
+      <div class="float-right">
+      <table class='stop'>
+      `
+      html+= renderBusStop(stopB,`<!-- Part B of ${busStops[stop[0].stopId]} -->`)
+      html+="</div>"
+    }else{
+      html+=`
+      <p class='stopName'>
+        ${busStops[stop[0].stopId]}
+      </p>
+      <table class='stop'>`
+      html+= renderBusStop(stop,busStops[stop[0].stopId])
+    }
   }
   return html + "<br><br>"
 }
@@ -45,14 +69,9 @@ const displayTiming = (busNo,{Load:load,EstimatedArrival:arrival}) =>{
 }
 
 const renderBusStop = (services,stopName,showAll=false)=>{
-  let html = `
-    <p class='stopName'>
-      ${stopName}
-    </p>
-    <table class='stop'>`
-  services = services.filter(({ServiceNo})=>ServiceNo!=="963R" && ServiceNo!=="97e")
+  let html = ``
+  services = showAll ? services : services.filter(({ServiceNo})=>ServiceNo!=="963R" && ServiceNo!=="97e")
   for(const service of services){
-    console.log(service)
     html+=`<tr>
       ${displayTiming(service.ServiceNo,service.NextBus)}
       ${displayTiming(null,service.NextBus2)}
