@@ -10,15 +10,21 @@ body,html{
 body{
   background-color: #dfdfdf;
 }
-@media only screen and (max-device-width: 600px) {
+@media only screen and (max-device-width: 700px) {
   body{
     font-size: 50%;
+  }
+  body #top .title {
+    padding: 1em 10px 1em 10px;
   }
   #output .stop{
     width:100vw;
   }
   body #top table {
-    margin-top:initial;
+    margin-top:3%;
+  }
+  table.stop tr td{
+    width:30vw;
   }
 }
 #top{
@@ -26,7 +32,7 @@ body{
   border-bottom-style: solid;
 }
 #top table {
-  margin-top:200px;
+  margin-top:17%;
 }
 .float-left{
   float:left;
@@ -39,8 +45,8 @@ body{
   background-color:transparent;
   font-family: Montserrat, Helvetica, sans-serif;
   font-weight: 700;
-  padding: 1em 10px 1em 10px;
   margin:0px;
+  padding: 0.3em 10px 0.3em 10px;
 }
 #time{
   left:60%;
@@ -105,31 +111,23 @@ body{
   float:right;
   border-style: solid;
   border-color: black;
-  margin-right: 3%;
+  margin-right: 10%;
+}
+#top table tr {
+  text-align: left;
+  padding:5px;
+  border-width: 0px;
+  font-size: 200%;
+  font-family: Montserrat;
 }
 #top table tr:nth-of-type(1){
-  text-align: left;
-  padding:5px;
-  border-width: 0px;
   background-color: #99ff99;
-  font-size: 200%;
-  font-family: Montserrat;
 }
 #top table tr:nth-of-type(2){
-  text-align: left;
-  padding:5px;
-  border-width: 0px;
   background-color: #ffff99;
-  font-size: 200%;
-  font-family: Montserrat;
 }
 #top table tr:nth-of-type(3){
-  text-align: left;
-  padding:5px;
-  border-width: 0px;
   background-color: #ff9999;
-  font-size: 200%;
-  font-family: Montserrat;
 }
 .load-unknown{
   background-color:lightcyan;

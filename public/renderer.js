@@ -8,6 +8,7 @@ const renderer = data =>{
   }
   for(const stop of data){
     if(stop.length>3){
+      // Break into 2 columns
       const stopA = stop.slice(0,Math.ceil(stop.length/2))
       const stopB = stop.slice(Math.ceil(stop.length/2),stop.length)
       html+=`
