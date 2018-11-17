@@ -6,7 +6,8 @@ const renderer = data =>{
     "17129":"Back Gate Middle", 
     "17121":"Back Gate Far"
   }
-  for(const stop of data){
+  for(let stop of data){
+    stop = stop.filter(({ServiceNo})=>ServiceNo!=="963R" && ServiceNo!=="97e")
     if(stop.length>3){
       // Break into 2 columns
       const stopA = stop.slice(0,Math.ceil(stop.length/2))
@@ -72,9 +73,8 @@ const displayTiming = (busNo,{Load:load,EstimatedArrival:arrival}) =>{
   return html + "</td>"
 }
 
-const renderBusStop = (services,stopName,showAll=false)=>{
+const renderBusStop = services=>{
   let html = ``
-  services = showAll ? services : services.filter(({ServiceNo})=>ServiceNo!=="963R" && ServiceNo!=="97e")
   for(const service of services){
     html+=`<tr>
       ${displayTiming(service.ServiceNo,service.NextBus)}
