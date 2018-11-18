@@ -13,7 +13,7 @@ body {
   background-color: #dfdfdf;
 }
 
-@media only screen and (max-device-width: 700px) {
+@media only screen and (max-width: 700px) {
   body {
     font-size: 50%;
   }
@@ -28,6 +28,12 @@ body {
   }
   table.stop tr td {
     width: 30vw;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  html body {
+    font-size: 55%;
   }
 }
 

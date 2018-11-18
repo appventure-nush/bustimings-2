@@ -1,7 +1,7 @@
 const puppeteer = require("puppeteer")
 const mocha = require("mocha")
 const {expect} = require("chai")
-const app = require("../app")
+const {server} = require("../app")
 const http = require('http')
 const devices = require('puppeteer/DeviceDescriptors')
 const nexus = devices["Nexus 5X"]
@@ -18,7 +18,7 @@ if(process.env.TRAVIS){
   options.headless = true
 }
 
-let browser, page, server
+let browser, page
 
 async function init(){
   browser = await puppeteer.launch(options)
@@ -31,7 +31,6 @@ describe("Bus timings web UI",async function(){
   this.timeout(15000);
   before(async function (){
     this.timeout(40000)
-    server = http.createServer(app);
     server.listen(8081)
     await init()
   })

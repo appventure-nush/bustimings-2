@@ -4,21 +4,14 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var {server} = require('../app');
 var debug = require('debug')('bustimings:server');
-var http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '8081');
-
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
+var port = normalizePort(process.env.BUSTIMINGS_PORT || '8081');
 
 /**
  * Listen on provided port, on all network interfaces.

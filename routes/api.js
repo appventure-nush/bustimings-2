@@ -1,35 +1,40 @@
-const express = require('express')
-const router = express.Router()
 const getData = require("../getData")
 const cache = new (require("node-cache"))({
-  stdTTL:60,
-  checkperiod:50
+  checkperiod:2
 })
 
-router.post("/api/getData",(req,res)=>{
-  ;(async ()=>{
-    const cachedValue = cache.get("bus-data")
-    if(cachedValue!==undefined){
-      console.log("Cache hit!")
-      return res.json(cachedValue)
-    }
-    const {results,nextBusArrival} = await getData()
-    setTimeout(()=>{
-      cache.del("bus-data")
-      console.log("Deleted")
-    },nextBusArrival-new Date().getTime())
-    //Add data to cache
-    cache.set("bus-data",results,60)
-    return res.json(results)
-  })()
-  .catch(err=>{
-    let code = err.code || 500
-    console.log("An error occurred:",err.toString())
-    res.status(code).json({
-      error:true,
-      message:err.toString()
+let cached = false
+module.exports = (socket,io)=>{
+  const uncaughtErrorHandler = require("./error")(socket)
+
+  socket.on("dataReq",callback=>{
+    ;(async ()=>{
+      const cachedValue = cache.get("bus-data")
+      if(cachedValue!==undefined){
+        console.log("Cache hit!")
+        return callback(null,cachedValue)
+      }
+      const {results} = await getData()
+      //Add data to cache
+      cache.set("bus-data",results,20)
+      return callback(null,results)
+    })()
+    .catch(e=>{
+      console.log(e)
+      throw e
     })
+    .catch(e => callback(e.toString()))
+    //Error in handling error
+    .catch(uncaughtErrorHandler)
   })
-})
-
-module.exports = router
+  if(!cached){
+    cache.on("expired",async ()=>{
+      console.log("ok")
+      const {results} = await getData()
+      io.emit('data',results)
+      console.log("pushed")
+      cache.set("bus-data",results,20)
+    })
+    cached=true
+  }
+}

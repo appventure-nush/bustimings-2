@@ -2,7 +2,7 @@
 //It handles caching and PWA
 //Based on hwboard serviceWorker
 //https://github.com/junron/hwboard/blob/master/public/sw.js
-const version = "1.0.0"
+const version = "1.1.0"
 
 console.log(`Service worker version ${version}`)
 self.addEventListener('install', function(e) {
@@ -37,7 +37,7 @@ self.addEventListener('fetch',function(event) {
         return cache.match(event.request).then(function(response) {
           console.log(`Loading ${url}`)
           const fetchPromise = new Promise(resolve=>{
-            const timer = setTimeout(()=>{
+            const timer = url.includes("/socket.io") ? 10 : setTimeout(()=>{
               console.log(`Network timed out for ${url}`)
               resolve(createResponse({
                 data:["<h1>Request timed out</h1><h2>Please try again later</h2>"],
@@ -46,7 +46,7 @@ self.addEventListener('fetch',function(event) {
                 status:500,
                 statusText:"Request timed out"
               }))
-            },3000)
+            }, 3000)
             fetch(event.request)
             .then(response=>{
               clearTimeout(timer)

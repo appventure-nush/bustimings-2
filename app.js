@@ -1,8 +1,7 @@
 var express = require('express');
+const http = require('http')
 var path = require('path');
 var logger = require('morgan');
-
-const api = require("./routes/api");
 
 var app = express();
 
@@ -10,7 +9,11 @@ const csp =
 `default-src 'none';
 script-src 'self';
 style-src 'self' https://fonts.googleapis.com;
-connect-src 'self';
+connect-src 'self' 
+ws://localhost:${process.env.BUSTIMINGS_PORT || '8081'} 
+wss://${process.env.BUSTIMINGS_HOSTNAME} 
+http://localhost:${process.env.BUSTIMINGS_PORT || '8081'} 
+https://${process.env.BUSTIMINGS_HOSTNAME};
 object-src 'none';
 img-src 'self' data:;
 base-uri 'none';
@@ -39,7 +42,15 @@ app.use((_,res,next)=>{
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules')));
-app.use(api);
+// app.use(api);
+
+const server = http.createServer(app)
+const websocket = require("./websocket")
+const io = websocket.createServer(server,app)
 
 
-module.exports = app;
+module.exports = {
+  app,
+  server,
+  io
+};

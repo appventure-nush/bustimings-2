@@ -17,7 +17,23 @@ registerPromiseWorker(function (message) {
     }
     return db.busServices.bulkPut(data)
   }else if(message.type=="get"){
-    return db.busServices.toArray()
+    return new Promise((res,rej)=>{
+      db.busServices.toArray()
+      .then(services=>{
+        services = services
+        .map(({service})=>service)
+        .sort((a,b)=>a.length-b.length)
+        for(const service of services){
+          for (const bus of service){
+            if(new Date(bus.NextBus.EstimatedArrival)<new Date()){
+              bus.NextBus = bus.NextBus2
+              bus.NextBus2 = bus.NextBus3
+            }
+          }
+        }
+        return services
+      })
+    })
   }else if(message.type=="getStop"){
     return db.busServices.get(message.id)
   }

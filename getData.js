@@ -34,6 +34,6 @@ module.exports = async ()=>{
   }
   return {
     results,
-    nextBusArrival
+    // nextBusArrival
   }
 }
