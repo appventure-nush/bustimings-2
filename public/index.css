@@ -120,6 +120,10 @@ body {
   width: 20%;
 }
 
+.small {
+  font-size: 25%;
+}
+
 .t1 {
   font-size: 400%;
   border-right-style: solid;

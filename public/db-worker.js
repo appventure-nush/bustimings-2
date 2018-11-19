@@ -29,7 +29,6 @@ registerPromiseWorker(function (message) {
         .sort((a,b)=>a.length-b.length)
         for(const service of services){
           for (const bus of service){
-            console.log(bus.ServiceNo,bus.NextBus.EstimatedArrival,new Date())
             if(new Date(bus.NextBus.EstimatedArrival).getTime()<new Date().getTime()){
               bus.NextBus = bus.NextBus2
               bus.NextBus2 = bus.NextBus3

@@ -59,26 +59,30 @@ const getLoadClass = load =>{
   return "load-"+load
 }
 
-const displayTiming = (busNo,{Load:load,EstimatedArrival:arrival}) =>{
+const displayTiming = (busNo,{Load:load,EstimatedArrival:arrival},debug=false) =>{
   const arrivalMins = getMins(new Date(arrival))
   let html =
    `<td class='t1 ${arrivalMins==="No data" ? "no-data" : getLoadClass(load)}'>
       ${arrivalMins}`
-  if(busNo){
+    if(busNo){
     html = `<td class='busNo'>${busNo}</td>` + html
   }
   if (arrivalMins != 'Arr' && arrivalMins !== 'No data' && arrivalMins !== '--') {
     html += "<span class='m'>m</span>";
   } 
-  return html + "</td>"
+  return html + 
+  (debug 
+  ? `<div class="small">${new Date(arrival).toLocaleTimeString()}</div></td>`
+  : `</td>`)
 }
 
 const renderBusStop = services=>{
+  const debug = location.search.includes("debug")
   let html = ``
   for(const service of services){
     html+=`<tr>
-      ${displayTiming(service.ServiceNo,service.NextBus)}
-      ${displayTiming(null,service.NextBus2)}
+      ${displayTiming(service.ServiceNo,service.NextBus,debug)}
+      ${displayTiming(null,service.NextBus2,debug)}
       </tr>
       `
   }
