@@ -12,26 +12,31 @@ registerPromiseWorker(function (message) {
     for(const service of message.data){
       data.push({
         stopId:service[0].stopId,
-        service
+        service,
+        lastUpdated:new Date().getTime()
       })
     }
     return db.busServices.bulkPut(data)
   }else if(message.type=="get"){
-    return new Promise((res,rej)=>{
+    return new Promise(res=>{
       db.busServices.toArray()
       .then(services=>{
         services = services
-        .map(({service})=>service)
+        .map(({service,lastUpdated})=>{
+          service.lastUpdated = lastUpdated
+          return service
+        })
         .sort((a,b)=>a.length-b.length)
         for(const service of services){
           for (const bus of service){
-            if(new Date(bus.NextBus.EstimatedArrival)<new Date()){
+            console.log(bus.ServiceNo,bus.NextBus.EstimatedArrival,new Date())
+            if(new Date(bus.NextBus.EstimatedArrival).getTime()<new Date().getTime()){
               bus.NextBus = bus.NextBus2
               bus.NextBus2 = bus.NextBus3
             }
           }
         }
-        return services
+        res(services)
       })
     })
   }else if(message.type=="getStop"){

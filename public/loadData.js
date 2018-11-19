@@ -17,7 +17,7 @@ conn.on("connect",function(){
     document.getElementById("output").innerHTML = `
     <p class="error">
       Error loading data from server. Arrival times are estimated.<br>
-      Last fetched: ${new Date().toLocaleTimeString()}
+      Last fetched: ${new Date(json[0].lastUpdated).toLocaleTimeString()}
     </p>
     `
     document.getElementById("output").innerHTML += renderer(json)
@@ -54,5 +54,31 @@ setInterval(async ()=>{
   const json = await database.postMessage({
     type:"get"
   })
-  document.getElementById("output").innerHTML = renderer(json)
+  if(!conn.connected){
+    document.getElementById("output").innerHTML = `
+    <p class="error">
+      Error loading data from server. Arrival times are estimated.<br>
+      Last fetched: ${new Date(json[0].lastUpdated).toLocaleTimeString()}
+    </p>
+    `
+  }else{
+    document.getElementById("output").innerHTML=""
+  }
+  document.getElementById("output").innerHTML += renderer(json)
 },3000)
+
+
+conn.on("connect_error",async ()=>{
+  console.log("Connection error")
+  const json = await database.postMessage({
+    type:"get"
+  })
+  console.log("Locally cached:",json)
+  document.getElementById("output").innerHTML = `
+  <p class="error">
+    Error loading data from server. Arrival times are estimated.<br>
+    Last fetched: ${new Date(json[0].lastUpdated).toLocaleTimeString()}
+  </p>
+  `
+  document.getElementById("output").innerHTML += renderer(json)
+})
