@@ -30,14 +30,18 @@ registerPromiseWorker(function (message) {
         for(const service of services){
           for (const bus of service){
             // If next bus already arrived, move buses forward
+            if(new Date(bus.NextBus2.EstimatedArrival).getTime()<new Date().getTime()){
+              bus.NextBus2 = bus.NextBus3
+              bus.NextBus3 = {
+                EstimatedArrival:new Date(0)
+              }
+            }
             if(new Date(bus.NextBus.EstimatedArrival).getTime()<new Date().getTime()){
               bus.NextBus = bus.NextBus2
               bus.NextBus2 = bus.NextBus3
-              delete bus.NextBus3
-            }
-            if(new Date(bus.NextBus2.EstimatedArrival).getTime()<new Date().getTime()){
-              bus.NextBus2 = bus.NextBus3
-              delete bus.NextBus3
+              bus.NextBus3 = {
+                EstimatedArrival:new Date(0)
+              }
             }
           }
         }
