@@ -20,20 +20,22 @@ module.exports = async ()=>{
   .map(JSON.parse)
   .map(a=>a.Services)
 
-  let nextBusArrival = Infinity
   for(let i=0;i<busStops.length;i++){
     for(const service of results[i]){
       service.stopId = busStops[i]
       // Bus already come, shift buses behind forward
-      if(new Date(service.NextBus.EstimatedArrival)<new Date()){
-        service.NextBus = service.NextBus2
-        service.NextBus2 = service.NextBus3
+      if(new Date(bus.NextBus.EstimatedArrival).getTime()<new Date().getTime()){
+        bus.NextBus = bus.NextBus2
+        bus.NextBus2 = bus.NextBus3
+        delete bus.NextBus3
       }
-      nextBusArrival = Math.min(new Date(service.NextBus.EstimatedArrival),nextBusArrival)
+      if(new Date(bus.NextBus2.EstimatedArrival).getTime()<new Date().getTime()){
+        bus.NextBus2 = bus.NextBus3
+        delete bus.NextBus3
+      }
     }
   }
   return {
-    results,
-    // nextBusArrival
+    results
   }
 }
