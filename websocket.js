@@ -4,6 +4,8 @@ exports.createServer = function(server,app){
   //Create websocket server from http server
   const io = require('socket.io')(server)
 
+  io.connections = 0
+
   const port = process.env.BUSTIMINGS_PORT || '8081'
   const hostname = process.env.BUSTIMINGS_HOSTNAME || "localhost"
   //Prevent CSRF (sort of) by only allowing specific origins
@@ -30,6 +32,7 @@ exports.createServer = function(server,app){
 
   //For cookies
   io.on('connection',function(socket){
+    io.connections++
     console.log("User connected")
     //Start socket.io code here
 
@@ -43,6 +46,7 @@ exports.createServer = function(server,app){
 
     socket.on('disconnect', function(){
       console.log('user disconnected')
+      io.connections--
     })
   })
   return io

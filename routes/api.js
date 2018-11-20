@@ -29,11 +29,13 @@ module.exports = (socket,io)=>{
   })
   if(!cached){
     cache.on("expired",async ()=>{
-      console.log("ok")
-      const {results} = await getData()
-      io.emit('data',results)
-      console.log("pushed")
-      cache.set("bus-data",results,20)
+      if(io.connections>0){
+        console.log("ok")
+        const {results} = await getData()
+        io.emit('data',results)
+        console.log("pushed")
+        cache.set("bus-data",results,20)
+      }
     })
     cached=true
   }
