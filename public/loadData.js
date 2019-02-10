@@ -1,3 +1,12 @@
+const updateTime = ()=>{
+  const hours = new Date().getHours();
+  const minutes = new Date().getMinutes();
+  const seconds = new Date().getSeconds();
+  const time = (hours%12).toString().padStart(2,'0')+":"+minutes.toString().padStart(2,'0')+":"+seconds.toString().padStart(2,'0')+(hours>11&&hours!==24 ? "pm" :"am");
+  document.getElementById("time").innerText = time;
+}
+updateTime();
+setInterval(updateTime,500);
 const database = new PromiseWorker(new Worker("/db-worker.js"))
 const conn = io(location.origin,{
   secure: true,
@@ -47,25 +56,6 @@ conn.on("connect",function(){
   })
 })
 
-
-// Refresh timings every 3 seconds
-setInterval(async ()=>{
-  console.log("Refreshed")
-  const json = await database.postMessage({
-    type:"get"
-  })
-  if(!conn.connected){
-    document.getElementById("output").innerHTML = `
-    <p class="error">
-      Error loading data from server. Arrival times are estimated.<br>
-      Last fetched: ${new Date(json[0].lastUpdated).toLocaleTimeString()}
-    </p>
-    `
-  }else{
-    document.getElementById("output").innerHTML=""
-  }
-  document.getElementById("output").innerHTML += renderer(json)
-},3000)
 
 
 conn.on("connect_error",async ()=>{

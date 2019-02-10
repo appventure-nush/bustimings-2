@@ -1,44 +1,79 @@
 const request = require("request-promise-native")
-const {ACCOUNT_KEY:accountKey} = process.env
-if(!accountKey){
+const {
+  ACCOUNT_KEY: accountKey
+} = process.env
+if (!accountKey) {
   throw new Error("Account key is not defined.")
 }
+let cachedData;
+let clearCacheTimer;
 
-module.exports = async ()=>{
+const parseTime = date => `${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+
+module.exports = async (refreshCallback) => {
   let endpoint = 'https://api.mytransport.sg/ltaodataservice/BusArrivalv2?BusStopCode='
   const options = {
-    headers:{
+    headers: {
       AccountKey: accountKey
     }
   }
-  const busStops = ["16991", "17191", "17129", "17121"]
-  const results = (
-    await Promise.all(busStops.map(id=>
-      request(`${endpoint}${id}`,options)
-    )
-  ))
-  .map(JSON.parse)
-  .map(a=>a.Services)
+  const busStops = ["16991", "17191", "17129", "17121"];
+  let results;
+  if (cachedData) results = cachedData;
+  else {
+    results = (
+        await Promise.all(busStops.map(id =>
+          request(`${endpoint}${id}`, options)
+        )))
+      .map(JSON.parse)
+      .map(a => a.Services);
+    clearCacheTimer = setTimeout(() => {
+      cachedData = undefined;
+      const time = parseTime(new Date());
+      if (refreshCallback) refreshCallback({
+        time,
+        type: "cacheExpire"
+      });
+    }, 60000)
+  }
 
-  for(let i=0;i<busStops.length;i++){
-    for(const service of results[i]){
+  // Finds the next bus that will require updating of its time status
+  // Eg if the time now is 00:01:01, and there is a bus arriving at 00:03:00
+  // updates will need to be pushed at 00:02:00
+  let allSeconds = [];
+  const minNonNeg = arr => Math.min(...arr.map(a => a > -1 ? a : a + 60));
+  for (let i = 0; i < busStops.length; i++) {
+    for (const service of results[i]) {
       service.stopId = busStops[i]
+      const bus1 = new Date(service.NextBus.EstimatedArrival)
+      const bus2 = new Date(service.NextBus2.EstimatedArrival);
+      const bus3 = new Date(service.NextBus3.EstimatedArrival);
+      allSeconds.push(bus1.getSeconds(), bus2.getSeconds(), bus3.getSeconds())
       // Bus already come, shift buses behind forward
-      if(new Date(service.NextBus2.EstimatedArrival).getTime()<new Date().getTime()){
+      if (bus2 < new Date().getTime()) {
         service.NextBus2 = service.NextBus3
         service.NextBus3 = {
-          EstimatedArrival:new Date(0)
+          EstimatedArrival: new Date(0)
         }
       }
-      if(new Date(service.NextBus.EstimatedArrival).getTime()<new Date().getTime()){
+      if (bus1 < new Date().getTime()) {
         service.NextBus = service.NextBus2
         service.NextBus2 = service.NextBus3
         service.NextBus3 = {
-          EstimatedArrival:new Date(0)
+          EstimatedArrival: new Date(0)
         }
       }
     }
   }
+  allSeconds = allSeconds.map(a => a - new Date().getSeconds()).filter(a => !Number.isNaN(a));
+  const seconds = minNonNeg(allSeconds) + 1;
+  const time = parseTime(new Date(new Date().getTime() + seconds * 1000));
+  setTimeout(() => {
+    if (refreshCallback) refreshCallback({
+      time,
+      type: "timingReRender"
+    });
+  }, seconds * 1000);
   return {
     results
   }

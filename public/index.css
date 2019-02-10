@@ -25,9 +25,13 @@ body {
   }
   body #top table {
     margin-top: 3%;
+    position: initial;
   }
   table.stop tr td {
     width: 30vw;
+  }
+  .title #time {
+    margin-right: 1%;
   }
 }
 
@@ -43,7 +47,7 @@ body {
 }
 
 #top table {
-  margin-top: 17%;
+  top: 17%;
 }
 
 .error {
@@ -78,8 +82,9 @@ body {
 }
 
 #time {
-  left: 60%;
-  width: 50%;
+  float: right;
+  margin-right: 7%;
+  font-size: 0.5em;
   text-align: center;
 }
 
@@ -152,7 +157,8 @@ body {
   float: right;
   border-style: solid;
   border-color: black;
-  margin-right: 10%;
+  position: absolute;
+  right: 10%;
 }
 
 #top table tr {

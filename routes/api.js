@@ -1,42 +1,38 @@
 const getData = require("../getData")
-const cache = new (require("node-cache"))({
-  checkperiod:2
-})
+let currentRefreshId;
 
-let cached = false
-module.exports = (socket,io)=>{
+module.exports = (socket, io) => {
   const uncaughtErrorHandler = require("./error")(socket)
 
-  socket.on("dataReq",callback=>{
-    ;(async ()=>{
-      const cachedValue = cache.get("bus-data")
-      if(cachedValue!==undefined){
-        console.log("Cache hit!")
-        return callback(null,cachedValue)
-      }
-      const {results} = await getData()
-      //Add data to cache
-      cache.set("bus-data",results,20)
-      return callback(null,results)
-    })()
-    .catch(e=>{
-      console.log(e)
-      throw e
-    })
-    .catch(e => callback(e.toString()))
-    //Error in handling error
-    .catch(uncaughtErrorHandler)
-  })
-  if(!cached){
-    cache.on("expired",async ()=>{
-      if(io.connections>0){
-        console.log("ok")
-        const {results} = await getData()
-        io.emit('data',results)
-        console.log("pushed")
-        cache.set("bus-data",results,20)
-      }
-    })
-    cached=true
+  const push = async id => {
+    if (id.time === currentRefreshId) {
+      console.log("Deduped:", id.time)
+      return
+    }
+    if (io.connections > 0) {
+      currentRefreshId = id.time;
+      const {
+        results
+      } = await getData(push)
+      io.emit('data', results)
+      console.log("Pushed:", id.time)
+    }
   }
+  getData(push);
+  socket.on("dataReq", callback => {
+    ;
+    (async () => {
+      const {
+        results
+      } = await getData();
+      return callback(null, results)
+    })()
+    .catch(e => {
+        console.log(e)
+        throw e
+      })
+      .catch(e => callback(e.toString()))
+      //Error in handling error
+      .catch(uncaughtErrorHandler)
+  })
 }
