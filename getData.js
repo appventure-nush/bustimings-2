@@ -1,7 +1,10 @@
 const request = require("request-promise-native")
-const {
+let {
   ACCOUNT_KEY: accountKey
 } = process.env
+if(!accountKey){
+  accountKey = require("fs").readFileSync("token","utf8")
+}
 if (!accountKey) {
   throw new Error("Account key is not defined.")
 }
@@ -11,7 +14,7 @@ let clearCacheTimer;
 const parseTime = date => `${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
 
 module.exports = async (refreshCallback) => {
-  let endpoint = 'https://api.mytransport.sg/ltaodataservice/BusArrivalv2?BusStopCode='
+  let endpoint = 'http://datamall2.mytransport.sg/ltaodataservice/BusArrivalv2?BusStopCode='
   const options = {
     headers: {
       AccountKey: accountKey
@@ -47,8 +50,7 @@ module.exports = async (refreshCallback) => {
       service.stopId = busStops[i]
       const bus1 = new Date(service.NextBus.EstimatedArrival)
       const bus2 = new Date(service.NextBus2.EstimatedArrival);
-      const bus3 = new Date(service.NextBus3.EstimatedArrival);
-      allSeconds.push(bus1.getSeconds(), bus2.getSeconds(), bus3.getSeconds())
+      allSeconds.push(bus1.getSeconds(), bus2.getSeconds())
       // Bus already come, shift buses behind forward
       if (bus2 < new Date().getTime()) {
         service.NextBus2 = service.NextBus3

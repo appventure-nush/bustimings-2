@@ -14,8 +14,13 @@ module.exports = (socket, io) => {
       const {
         results
       } = await getData(push)
+      if (id.type === "timingReRender") {
+        io.emit('reRender');
+        console.log("ReRender requested:", id.time)
+        return
+      }
       io.emit('data', results)
-      console.log("Pushed:", id.time)
+      console.log("New data:", id.time)
     }
   }
   getData(push);

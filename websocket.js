@@ -1,6 +1,6 @@
 //export so that accessible in app.js
 //server param is a http server
-exports.createServer = function(server,app){
+exports.createServer = function (server, app) {
   //Create websocket server from http server
   const io = require('socket.io')(server)
 
@@ -10,28 +10,33 @@ exports.createServer = function(server,app){
   const hostname = process.env.BUSTIMINGS_HOSTNAME || "localhost"
   //Prevent CSRF (sort of) by only allowing specific origins
   //Could origin spoofing be possible?
-  io.origins((origin,callback)=>{
-    const origins = ["https://"+hostname,"http://localhost:"+port]
-    if(process.env.CI=="true"){
+  io.origins((origin, callback) => {
+    const origins = [
+      "https://" + hostname,
+      "http://localhost:" + port,
+      "https://bustimings.nushhwboard.ml",
+      "https://appventure.nushigh.edu.sg"
+    ]
+    if (process.env.CI === "true") {
       //Socket-io client origin is * for some reason
       //TODO find out why and avoid if possible
-      if(origin=="*"){
-        console.log("\033[0;32mOrigin "+origin+" was authorised\033[0m")
-        return callback(null,true)
+      if (origin === "*") {
+        console.log("\033[0;32mOrigin " + origin + " was authorised\033[0m")
+        return callback(null, true)
       }
     }
-    for (const authOrigin of origins){
-      if(origin.startsWith(authOrigin)){
-        console.log("\033[0;32mOrigin "+origin+" was authorised\033[0m")
-        return callback(null,true)
+    for (const authOrigin of origins) {
+      if (origin.startsWith(authOrigin)) {
+        console.log("\033[0;32mOrigin " + origin + " was authorised\033[0m")
+        return callback(null, true)
       }
     }
-    console.log("\033[0;31mOrigin "+origin+" was blocked\033[0m")
-    return callback("Not authorised",false)
+    console.log("\033[0;31mOrigin " + origin + " was blocked\033[0m")
+    return callback("Not authorised", false)
   })
 
   //For cookies
-  io.on('connection',function(socket){
+  io.on('connection', function (socket) {
     io.connections++
     console.log("User connected")
     //Start socket.io code here
@@ -39,12 +44,12 @@ exports.createServer = function(server,app){
     //Send uncaught errors, eg `callback is not a function` to client
     const uncaughtErrorHandler = require("./routes/error")(socket)
 
-    ;(async ()=>{
-      require("./routes/api")(socket,io)
+    ;(async () => {
+      require("./routes/api")(socket, io)
     })()
-    .catch(uncaughtErrorHandler)
+        .catch(uncaughtErrorHandler)
 
-    socket.on('disconnect', function(){
+    socket.on('disconnect', function () {
       console.log('user disconnected')
       io.connections--
     })
