@@ -1,38 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Webpage for displaying bus timings around the school.">
-    <title>NUSH Bus Timings</title>
-  </head>
-  <body>
-  <div id="top">
-      <table>
-        <tr>
-          <td> Seats Available</td>
-        </tr>
-        <tr>
-          <td> Standing Available</td>
-        </tr>
-        <tr>
-          <td> Standing Limited</td>
-        </tr>
-      </table>
-      <p class="title"> NUSH Bus Timings
-        <span id="time">
-        </span>
-      </p>
-    </div>
-    <div id="output">
 
-    </div>
-    <script src="/promise-worker/dist/promise-worker.js"></script>
-    <script src="/socket.io-client/dist/socket.io.slim.js"></script>
-    <script src="/renderer.js"></script>
-    <script src="/loadData.js"></script>
-    <script src="/loadSw.js"></script>
-    <link href="index.min.css" rel="stylesheet">
-  </body>
-  <link href="/font.css" rel="stylesheet">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Webpage for displaying bus timings around the school.">
+  <title>NUSH Bus Timings</title>
+</head>
+
+<body>
+  <div id="top">
+    <table>
+      <tr>
+        <td> Seats Available</td>
+      </tr>
+      <tr>
+        <td> Standing Available</td>
+      </tr>
+      <tr>
+        <td> Standing Limited</td>
+      </tr>
+    </table>
+    <p class="title"> NUSH Bus Timings
+      <span id="time">
+      </span>
+    </p>
+  </div>
+  <div id="output">
+
+  </div>
+  <script src="./promise-worker/dist/promise-worker.js"></script>
+  <script src="./socket.io-client/dist/socket.io.slim.js"></script>
+  <script src="./renderer.js"></script>
+  <script src="./loadData.js"></script>
+  <script src="./loadSw.js"></script>
+  <link href="./index.min.css" rel="stylesheet">
+</body>
+<link href="./font.css" rel="stylesheet">
+
 </html>
 <!--Wayne Tee-->

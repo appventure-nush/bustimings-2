@@ -47,8 +47,7 @@ module.exports = async (refreshCallback) => {
       service.stopId = busStops[i]
       const bus1 = new Date(service.NextBus.EstimatedArrival)
       const bus2 = new Date(service.NextBus2.EstimatedArrival);
-      const bus3 = new Date(service.NextBus3.EstimatedArrival);
-      allSeconds.push(bus1.getSeconds(), bus2.getSeconds(), bus3.getSeconds())
+      allSeconds.push(bus1.getSeconds(), bus2.getSeconds())
       // Bus already come, shift buses behind forward
       if (bus2 < new Date().getTime()) {
         service.NextBus2 = service.NextBus3

@@ -52,7 +52,7 @@ describe("Bus timings web UI",async function(){
     await page.goto('http://localhost:8081')
     const titleElem = await page.$("body div p.title")
     const titleText = await page.evaluate(titleElem => titleElem.textContent,titleElem)
-    expect(titleText.trim()).to.equal("NUSH Bus Timings")
+    expect(titleText.trim().split("\n")[0]).to.equal("NUSH Bus Timings")
     await page.screenshot({path: './artifacts/offline.png'})
   })
   after(async function(){
