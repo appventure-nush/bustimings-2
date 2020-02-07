@@ -1,3 +1,5 @@
+Sentry.init({ dsn: 'https://49b3a3016f6142528d355dc7042ef841@sentry.io/2322532' });
+
 const updateTime = () => {
   const hours = new Date().getHours();
   const minutes = new Date().getMinutes();
