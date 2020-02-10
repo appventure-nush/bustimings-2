@@ -1,11 +1,12 @@
 var express = require('express');
-const http = require('http')
+const http = require('http');
 var path = require('path');
 var logger = require('morgan');
 
 var app = express();
 
-const csp = 
+const fs = require("fs");
+const csp =
 `default-src 'none';
 script-src 'self' https://browser.sentry-cdn.com/;
 style-src 'self' https://fonts.googleapis.com;
@@ -36,6 +37,9 @@ app.use((_,res,next)=>{
   res.header("Expect-CT",`max-age=31536000, enforce`)
   res.header(`Feature-policy`,`geolocation 'none'; accelerometer 'none';ambient-light-sensor 'none'; sync-xhr 'none'; autoplay 'none';payment 'none'`)
   res.header("x-powered-by","some software")
+  if(fs.existsSync("clearCache")){
+    res.header("Clear-Site-Data","\"cache\", \"cookies\", \"storage\"")
+  }
   next()
 })
 

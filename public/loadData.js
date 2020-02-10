@@ -5,6 +5,10 @@ const updateTime = () => {
   const minutes = new Date().getMinutes();
   const seconds = new Date().getSeconds();
   const time = (hours % 12).toString().padStart(2, '0') + ":" + minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0') + (hours > 11 && hours !== 24 ? "pm" : "am");
+  if(time==="08:44:12am"){
+    // Refresh page daily
+    location.reload()
+  }
   document.getElementById("time").innerText = time;
 }
 updateTime();
