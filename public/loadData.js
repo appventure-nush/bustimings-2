@@ -16,7 +16,8 @@ setInterval(updateTime, 500);
 const conn = io(location.origin, {
   secure: true,
   reconnectionDelay: 100,
-  timeout: 3000
+  timeout: 3000,
+  path: location.pathname + "/socket.io"
 });
 conn.on("connect", function () {
   new Promise((res, rej) => {
@@ -104,11 +105,11 @@ function getCachedData() {
 
 function setCachedData(services) {
   const data = [];
-  for(const service of services){
+  for (const service of services) {
     data.push({
-      stopId:service[0].stopId,
+      stopId: service[0].stopId,
       service,
-      lastUpdated:new Date().getTime()
+      lastUpdated: new Date().getTime()
     })
   }
   localStorage.setItem("data", JSON.stringify(data));
