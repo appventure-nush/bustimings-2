@@ -11,11 +11,11 @@ self.addEventListener('install', function(e) {
     await self.skipWaiting()
     return caches.open('cache-default').then(function(cache) {
       const cacheArray = [
-        "/index.min.css",
-        "/index.html",
-        "/loadData.js",
-        "/renderer.js",
-        "/loadSw.js"
+        "./index.min.css",
+        "./index.html",
+        "./loadData.js",
+        "./renderer.js",
+        "./loadSw.js"
       ]
       return cache.addAll(cacheArray);
     })
