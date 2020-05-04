@@ -106,6 +106,7 @@ function getCachedData() {
 function setCachedData(services) {
   const data = [];
   for (const service of services) {
+    if (service.length === 0) continue
     data.push({
       stopId: service[0].stopId,
       service,
