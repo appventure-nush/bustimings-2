@@ -17,7 +17,7 @@ const conn = io(location.origin, {
   secure: true,
   reconnectionDelay: 100,
   timeout: 3000,
-  path: location.pathname + "/socket.io"
+  path: (location.pathname === "/" ? "" :location.pathname)  + "/socket.io"
 });
 conn.on("connect", function () {
   new Promise((res, rej) => {
