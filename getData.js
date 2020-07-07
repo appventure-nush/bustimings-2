@@ -3,7 +3,7 @@ let {
   ACCOUNT_KEY: accountKey
 } = process.env
 if(!accountKey){
-  accountKey = require("fs").readFileSync("token","utf8")
+  accountKey = require("fs").readFileSync("token","utf8").trim()
 }
 if (!accountKey) {
   throw new Error("Account key is not defined.")
@@ -24,12 +24,14 @@ module.exports = async (refreshCallback) => {
   let results;
   if (cachedData) results = cachedData;
   else {
+    console.log("New data fetched")
     results = (
         await Promise.all(busStops.map(id =>
           request(`${endpoint}${id}`, options)
         )))
       .map(JSON.parse)
       .map(a => a.Services);
+    cachedData = results;
     clearCacheTimer = setTimeout(() => {
       cachedData = undefined;
       const time = parseTime(new Date());
@@ -37,7 +39,7 @@ module.exports = async (refreshCallback) => {
         time,
         type: "cacheExpire"
       });
-    }, 60000)
+    }, 50000)
   }
 
   // Finds the next bus that will require updating of its time status
