@@ -1,6 +1,6 @@
 Sentry.init({dsn: 'https://49b3a3016f6142528d355dc7042ef841@sentry.io/2322532'});
 
-const updateTime = () => {
+function updateTime() {
   const hours = new Date().getHours();
   const minutes = new Date().getMinutes();
   const seconds = new Date().getSeconds();
@@ -11,6 +11,7 @@ const updateTime = () => {
   }
   document.getElementById("time").innerText = time;
 }
+
 updateTime();
 setInterval(updateTime, 500);
 const conn = io(location.origin, {
@@ -20,13 +21,13 @@ const conn = io(location.origin, {
   path: (location.pathname === "/" ? "" :location.pathname)  + "/socket.io"
 });
 conn.on("connect", function () {
-  new Promise((res, rej) => {
-    conn.emit("dataReq", (err, data) => {
+  new Promise(function (res, rej) {
+    conn.emit("dataReq", function (err, data) {
       if (err) return rej(err)
       return res(data)
     })
   })
-    .catch(async error => {
+    .catch(async function (error) {
       const json = getCachedData();
       document.getElementById("output").innerHTML = `
     <p class="error">
@@ -37,31 +38,31 @@ conn.on("connect", function () {
       document.getElementById("output").innerHTML += renderer(json)
       throw error
     })
-    .then(async json => {
+    .then(async function (json) {
       console.log(json)
       setCachedData(json)
       return json
     })
-    .then(json => {
+    .then(function (json) {
       document.getElementById("output").innerHTML = renderer(json)
     })
 
 
   // Server pushes data
-  conn.on("data", async data => {
+  conn.on("data", async function (data) {
     console.log("Data pushed:", data);
     setCachedData(data);
     document.getElementById("output").innerHTML = renderer(data)
   })
 
-  conn.on("reRender", async () => {
+  conn.on("reRender", async function () {
     const data = getCachedData();
     document.getElementById("output").innerHTML = renderer(data)
   })
 })
 
 
-conn.on("connect_error", async () => {
+conn.on("connect_error", async function () {
   console.log("Connection error")
   const json = getCachedData();
   console.log("Locally cached:", json)
@@ -77,11 +78,13 @@ conn.on("connect_error", async () => {
 
 function getCachedData() {
   const services = JSON.parse(localStorage.getItem("data"))
-    .map(({service, lastUpdated}) => {
+    .map(function ({service, lastUpdated}) {
       service.lastUpdated = lastUpdated;
       return service
     })
-    .sort((a, b) => a.length - b.length)
+    .sort(function (a, b) {
+      return a.length - b.length;
+    })
   for (const service of services) {
     for (const bus of service) {
       // If next bus already arrived, move buses forward
