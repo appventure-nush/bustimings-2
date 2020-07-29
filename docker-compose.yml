@@ -1,9 +1,26 @@
-version: '2'
+version: 2
+
+networks:
+  primary:
+    external:
+      name: primary
+
 services:
   web:
-    build: .
-    ports:
-      - "${BUSTIMINGS_PORT}:${BUSTIMINGS_PORT}"
+    image: registry.nush.app/bustimings-2:latest
+    restart: always
     command: "npm start"
-    volumes:
-      - ./:/bustimings
+    networks:
+    - primary
+    expose:
+    - "8080"
+    environment:
+    - BUSTIMINGS_PORT=8080
+    - BUSTIMINGS_HOSTNAME=bustimings.nush.app
+    - ACCOUNT_KEY=<redacted>
+    labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.bustimings.rule=Host(`bustimings.nush.app`)"
+    - "traefik.http.routers.bustimings.entrypoints=https"
+    - "traefik.http.routers.bustimings.tls=true"
+    - "traefik.http.routers.bustimings.tls.certresolver=tlsresolver"
