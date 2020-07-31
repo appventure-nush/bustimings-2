@@ -28,15 +28,16 @@
   <div id="output">
 
   </div>
-  <script src="https://browser.sentry-cdn.com/5.12.1/bundle.min.js" integrity="sha384-y+an4eARFKvjzOivf/Z7JtMJhaN6b+lLQ5oFbBbUwZNNVir39cYtkjW1r6Xjbxg3" crossorigin="anonymous">
-  </script>
-  <script src="./socket.io-client/dist/socket.io.slim.js"></script>
+  <script src="https://browser.sentry-cdn.com/5.12.1/bundle.min.js" integrity="sha384-y+an4eARFKvjzOivf/Z7JtMJhaN6b+lLQ5oFbBbUwZNNVir39cYtkjW1r6Xjbxg3" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/babel-regenerator-runtime@6.5.0/runtime.min.js"></script>
+  <script src="../socket.io-client/dist/socket.io.slim.js"></script>
   <script src="./renderer.js"></script>
+  <script src="./padStart.js"></script>
   <script src="./loadData.js"></script>
-  <script src="./loadSw.js"></script>
-  <link href="./index.min.css" rel="stylesheet">
+  <link href="../index.min.css" rel="stylesheet">
 </body>
-<link href="./font.css" rel="stylesheet">
+<link href="../font.css" rel="stylesheet">
 
 </html>
 <!--Wayne Tee-->

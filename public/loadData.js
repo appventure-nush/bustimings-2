@@ -27,7 +27,7 @@ conn.on("connect", function () {
       return res(data)
     })
   })
-    .catch(async function (error) {
+    .catch(function (error) {
       const json = getCachedData();
       document.getElementById("output").innerHTML = `
     <p class="error">
@@ -38,7 +38,7 @@ conn.on("connect", function () {
       document.getElementById("output").innerHTML += renderer(json)
       throw error
     })
-    .then(async function (json) {
+    .then(function (json) {
       console.log(json)
       setCachedData(json)
       return json

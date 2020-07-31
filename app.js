@@ -8,9 +8,9 @@ var app = express();
 const fs = require("fs");
 const csp =
 `default-src 'none';
-script-src 'self' https://browser.sentry-cdn.com/;
+script-src 'self' https://browser.sentry-cdn.com/ https://cdn.jsdelivr.net;
 style-src 'self' https://fonts.googleapis.com;
-connect-src 'self' https://sentry.io  https://browser.sentry-cdn.com/ 
+connect-src 'self' https://sentry.io  https://browser.sentry-cdn.com/ https://cdn.jsdelivr.net/
 ws://localhost:${process.env.BUSTIMINGS_PORT || '8081'} 
 wss://${process.env.BUSTIMINGS_HOSTNAME} 
 http://localhost:${process.env.BUSTIMINGS_PORT || '8081'} 

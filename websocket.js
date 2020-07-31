@@ -14,8 +14,8 @@ exports.createServer = function (server, app) {
     const origins = [
       "https://" + hostname,
       "http://localhost:" + port,
-      "https://bustimings.nushhwboard.ml",
-      "https://appventure.nushigh.edu.sg"
+      "https://bustimings.nush.app",
+      "http://192.168.1.5"
     ]
     if (process.env.CI === "true") {
       //Socket-io client origin is * for some reason
@@ -47,7 +47,7 @@ exports.createServer = function (server, app) {
     ;(async () => {
       require("./routes/api")(socket, io)
     })()
-        .catch(uncaughtErrorHandler)
+      .catch(uncaughtErrorHandler)
 
     socket.on('disconnect', function () {
       console.log('user disconnected')
