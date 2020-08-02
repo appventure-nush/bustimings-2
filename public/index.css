@@ -66,10 +66,13 @@ body {
 
 .float-left {
   float: left;
+  width: 49vw;
 }
 
 .float-right {
   float: right;
+  width: 49vw;
+  margin-right: 10px;
 }
 
 .title {
@@ -96,11 +99,11 @@ body {
 }
 
 .stopName {
-  width: 100vw;
+  width: 100%;
   font-size: 350%;
   padding-bottom: 0px;
   padding-top: 10px;
-  height: 6%;
+  height: fit-content;
   margin: 0;
   padding-bottom: 5px;
   font-family: Montserrat, Helvetica, sans-serif;
@@ -108,13 +111,17 @@ body {
   padding-left: 10px;
 }
 
+.stop-parent{
+  width: 100vw;
+  overflow: hidden;
+}
 .stop {
   border-collapse: collapse;
-  width: 49vw;
+  width: 100%;
 }
 
 .busNo {
-  font-size: 400%;
+  font-size: 200%;
   color: white;
   border-bottom-style: solid;
   /* Venu suggestion */

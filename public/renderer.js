@@ -19,6 +19,7 @@ function renderer(data) {
         ${busStops[stop[0].stopId]}
       </p>`
       html += `
+      <div class='stop-parent'>
       <div class="float-left">
       <table class='stop'>`
       html += renderBusStop(stopA, busStops[stop[0].stopId])
@@ -27,14 +28,16 @@ function renderer(data) {
       <table class='stop'>
       `
       html += renderBusStop(stopB, `<!-- Part B of ${busStops[stop[0].stopId]} -->`)
-      html += "</div>"
+      html += "</div></div>"
     } else {
       html += `
       <p class='stopName'>
         ${busStops[stop[0].stopId]}
       </p>
+      <div class='stop-parent'>
+      <div class="float-left">
       <table class='stop'>`
-      html += renderBusStop(stop, busStops[stop[0].stopId])
+      html += renderBusStop(stop, busStops[stop[0].stopId]) + "</div></div>"
     }
   }
   return html + "<br><br>"

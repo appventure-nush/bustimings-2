@@ -29,14 +29,14 @@ function renderer(data) {
         var stopA = stop.slice(0, Math.ceil(stop.length / 2));
         var stopB = stop.slice(Math.ceil(stop.length / 2), stop.length);
         html += "\n      <p class='stopName'>\n        ".concat(busStops[stop[0].stopId], "\n      </p>");
-        html += "\n      <div class=\"float-left\">\n      <table class='stop'>";
+        html += "\n      <div class='stop-parent'><div class=\"float-left\">\n      <table class='stop'>";
         html += renderBusStop(stopA, busStops[stop[0].stopId]);
         html += "</div>\n      <div class=\"float-right\">\n      <table class='stop'>\n      ";
         html += renderBusStop(stopB, "<!-- Part B of ".concat(busStops[stop[0].stopId], " -->"));
-        html += "</div>";
+        html += "</div></div>";
       } else {
-        html += "\n      <p class='stopName'>\n        ".concat(busStops[stop[0].stopId], "\n      </p>\n      <table class='stop'>");
-        html += renderBusStop(stop, busStops[stop[0].stopId]);
+        html += "\n      <p class='stopName'>\n        ".concat(busStops[stop[0].stopId], "\n      </p>\n      <div class='stop-parent'><div class='float-left'><table class='stop'>");
+        html += renderBusStop(stop, busStops[stop[0].stopId]) + "</div></div>";
       }
     }
   } catch (err) {
