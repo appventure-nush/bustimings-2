@@ -30,6 +30,9 @@ body {
   table.stop tr td {
     width: 30vw;
   }
+  .stop-parent .float-right {
+    float: initial;
+  }
   .title #time {
     margin-right: 1%;
   }
