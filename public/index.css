@@ -124,7 +124,7 @@ body {
 }
 
 .busNo {
-  font-size: 200%;
+  font-size: 400%;
   color: white;
   border-bottom-style: solid;
   /* Venu suggestion */
@@ -151,7 +151,7 @@ body {
 }
 
 .t2 {
-  font-size: 350%;
+  font-size: 400%;
   font-family: Montserrat, Helvetica, sans-serif;
   text-align: center;
   border-bottom-style: solid;
