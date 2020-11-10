@@ -42,6 +42,9 @@ body {
   html body {
     font-size: 55%;
   }
+  .logo{
+    height: 50px !important;
+  }
 }
 
 #top {
@@ -50,7 +53,7 @@ body {
 }
 
 #top table {
-  top: 17%;
+  margin-top: 10px;
 }
 
 .error {
@@ -86,11 +89,28 @@ body {
   margin: 0px;
   padding: 0.3em 10px 0.3em 10px;
 }
+.right{
+  height: fit-content;
+  margin-right: 20px;
+  float: right;
+}
+.logo{
+  height: 80px;
+}
+.subtitle {
+  font-size: 1.5em;
+  background-color: transparent;
+  font-family: Montserrat, Helvetica, sans-serif;
+  font-weight: 700;
+  margin: 0;
+  padding: 0 10px 0 10px;
+}
 
 #time {
-  float: right;
+  font-weight: 700;
+  font-family: Montserrat, Helvetica, sans-serif;
   margin-right: 7%;
-  font-size: 0.5em;
+  font-size: 1.5em;
   text-align: center;
 }
 
@@ -167,15 +187,13 @@ body {
   float: right;
   border-style: solid;
   border-color: black;
-  position: absolute;
-  right: 10%;
 }
 
 #top table tr {
   text-align: left;
   padding: 5px;
   border-width: 0px;
-  font-size: 200%;
+  font-size: 150%;
   font-family: Montserrat;
 }
 
