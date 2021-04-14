@@ -20,7 +20,7 @@ exports.createServer = function (server, app) {
     if (process.env.CI === "true") {
       //Socket-io client origin is * for some reason
       //TODO find out why and avoid if possible
-      if (origin === "*") {
+      if (origin === "*" || !origin || !origin[0]) {
         console.log("\033[0;32mOrigin " + origin + " was authorised\033[0m")
         return callback(null, true)
       }
