@@ -108,7 +108,7 @@ body {
 
 #time {
   font-weight: 700;
-  font-family: Montserrat, Helvetica, sans-serif;
+  font-family: monospace;
   margin-right: 7%;
   font-size: 1.5em;
   text-align: center;
