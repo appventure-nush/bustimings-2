@@ -26,7 +26,7 @@ exports.createServer = function (server, app) {
       }
     }
     for (const authOrigin of origins) {
-      if (origin.startsWith(authOrigin)) {
+      if (!origin || origin.startsWith(authOrigin)) {
         console.log("\033[0;32mOrigin " + origin + " was authorised\033[0m")
         return callback(null, true)
       }
