@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "debug": "^4.1.1",
-    "dexie": "^3.0.0",
+    "dexie": "^3.2.2",
     "express": "^5.0.0-alpha.8",
     "morgan": "^1.10.0",
     "node-cache": "^5.1.0",
